@@ -1,0 +1,776 @@
+// ============================================
+// SASS/SCSS СТИЛИ ДЛЯ ФИЛОСОФСКОГО МАГАЗИНА
+// ============================================
+// Этот файл содержит все стили для приложения
+// Используем БЭМ-методологию для именования классов
+// Поддерживаем светлую и тёмную темы через CSS-переменные
+
+// ============================================
+// ПЕРЕМЕННЫЕ И НАСТРОЙКИ
+// ============================================
+
+// Цветовая палитра для светлой темы
+$light-bg-primary: #f5f3ef;        // Тёплый кремовый фон, как старая бумага
+$light-bg-secondary: #e8e4dc;      // Чуть темнее для карточек
+$light-bg-card: #ffffff;           // Белый для самих карточек
+$light-text-primary: #2c2a26;      // Тёмно-коричневый текст
+$light-text-secondary: #6b6559;    // Серо-коричневый для второстепенного текста
+$light-accent: #8b7355;            // Коричневый акцент (кожа, переплёт)
+$light-accent-hover: #6d5a43;      // Тёмный коричневый при наведении
+$light-selected: #d4a574;          // Золотисто-песочный для выбранного
+$light-shadow: rgba(44, 42, 38, 0.1);
+$light-border: #d9d4cc;
+
+// Цветовая палитра для тёмной темы
+$dark-bg-primary: #1a1816;         // Глубокий тёмно-коричневый
+$dark-bg-secondary: #25221f;       // Чуть светлее
+$dark-bg-card: #2d2a26;            // Фон карточек
+$dark-text-primary: #e8e4dc;       // Светлый текст
+$dark-text-secondary: #a8a296;     // Приглушённый текст
+$dark-accent: #c9a961;             // Золотой акцент
+$dark-accent-hover: #e0c078;       // Светлое золото
+$dark-selected: #8b7355;           // Коричнево-золотой
+$dark-shadow: rgba(0, 0, 0, 0.3);
+$dark-border: #3d3832;
+
+// Размеры и отступы
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+$spacing-xxl: 3rem;
+
+// Радиусы скругления
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 20px;
+$radius-full: 9999px;
+
+// Переходы и анимации
+$transition-fast: 0.15s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
+$transition-flip: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Шрифты
+$font-family: 'Georgia', 'Times New Roman', serif;
+$font-family-mono: 'Courier New', monospace;
+
+// ============================================
+// CSS ПЕРЕМЕННЫЕ (CUSTOM PROPERTIES)
+// ============================================
+// Определяем переменные для динамического переключения тем
+
+:root {
+    // По умолчанию светлая тема
+    --bg-primary: #{$light-bg-primary};
+    --bg-secondary: #{$light-bg-secondary};
+    --bg-card: #{$light-bg-card};
+    --text-primary: #{$light-text-primary};
+    --text-secondary: #{$light-text-secondary};
+    --accent: #{$light-accent};
+    --accent-hover: #{$light-accent-hover};
+    --selected: #{$light-selected};
+    --shadow: #{$light-shadow};
+    --border: #{$light-border};
+    
+    // Размеры
+    --spacing-xs: #{$spacing-xs};
+    --spacing-sm: #{$spacing-sm};
+    --spacing-md: #{$spacing-md};
+    --spacing-lg: #{$spacing-lg};
+    --spacing-xl: #{$spacing-xl};
+    --spacing-xxl: #{$spacing-xxl};
+    
+    // Радиусы
+    --radius-sm: #{$radius-sm};
+    --radius-md: #{$radius-md};
+    --radius-lg: #{$radius-lg};
+    --radius-xl: #{$radius-xl};
+    
+    // Переходы
+    --transition-fast: #{$transition-fast};
+    --transition-normal: #{$transition-normal};
+    --transition-slow: #{$transition-slow};
+    --transition-flip: #{$transition-flip};
+}
+
+// Тёмная тема через data-атрибут
+[data-theme="dark"] {
+    --bg-primary: #{$dark-bg-primary};
+    --bg-secondary: #{$dark-bg-secondary};
+    --bg-card: #{$dark-bg-card};
+    --text-primary: #{$dark-text-primary};
+    --text-secondary: #{$dark-text-secondary};
+    --accent: #{$dark-accent};
+    --accent-hover: #{$dark-accent-hover};
+    --selected: #{$dark-selected};
+    --shadow: #{$dark-shadow};
+    --border: #{$dark-border};
+}
+
+// ============================================
+// БАЗОВЫЕ СТИЛИ И СБРОС
+// ============================================
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: $font-family;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    transition: background-color var(--transition-normal), 
+                color var(--transition-normal);
+}
+
+// Утилита для скрытия элементов
+.hidden {
+    display: none !important;
+}
+
+// ============================================
+// КОМПОНЕНТ: APP (основной контейнер)
+// ============================================
+
+.app {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+// ============================================
+// КОМПОНЕНТ: HEADER
+// ============================================
+
+.header {
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+    padding: var(--spacing-xl);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    
+    // Декоративный элемент - "печать" в углу
+    &::before {
+        content: '🏛️';
+        position: absolute;
+        top: var(--spacing-md);
+        right: var(--spacing-md);
+        font-size: 3rem;
+        opacity: 0.1;
+        transform: rotate(15deg);
+    }
+    
+    &__title {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: normal;
+        margin-bottom: var(--spacing-sm);
+        color: var(--text-primary);
+        letter-spacing: 0.05em;
+        
+        // Эффект "состаренного" текста
+        text-shadow: 1px 1px 2px var(--shadow);
+    }
+    
+    &__subtitle {
+        font-size: clamp(1rem, 2.5vw, 1.25rem);
+        color: var(--text-secondary);
+        font-style: italic;
+        margin-bottom: var(--spacing-xl);
+    }
+}
+
+// ============================================
+// КОМПОНЕНТ: KARMA-SETUP (настройка кармы)
+// ============================================
+
+.karma-setup {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--border);
+    box-shadow: 0 4px 12px var(--shadow);
+    
+    &__label {
+        font-size: 1.1rem;
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+    
+    &__input {
+        width: 100px;
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 1.25rem;
+        text-align: center;
+        border: 2px solid var(--border);
+        border-radius: var(--radius-md);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        font-family: $font-family;
+        transition: border-color var(--transition-fast),
+                    box-shadow var(--transition-fast);
+        
+        &:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba($light-accent, 0.2);
+        }
+        
+        // Убираем стрелочки у input type number
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+    
+    &__button {
+        padding: var(--spacing-sm) var(--spacing-xl);
+        font-size: 1rem;
+        font-family: $font-family;
+        font-weight: 500;
+        color: white;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+        border: none;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: transform var(--transition-fast),
+                    box-shadow var(--transition-fast),
+                    background var(--transition-fast);
+        box-shadow: 0 4px 8px var(--shadow);
+        
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px var(--shadow);
+        }
+        
+        &:active {
+            transform: translateY(0);
+        }
+    }
+}
+
+// ============================================
+// КОМПОНЕНТ: KARMA-DISPLAY (индикатор кармы)
+// ============================================
+
+.karma-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--border);
+    box-shadow: 0 4px 12px var(--shadow);
+    flex-wrap: wrap;
+    
+    &__value,
+    &__slots {
+        font-size: 1.1rem;
+        color: var(--text-primary);
+        
+        strong {
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+    }
+    
+    &__reset {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--radius-full);
+        border: 2px solid var(--border);
+        background: var(--bg-primary);
+        color: var(--text-secondary);
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        &:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: rotate(180deg);
+        }
+    }
+}
+
+// ============================================
+// КОМПОНЕНТ: MAIN
+// ============================================
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+// ============================================
+// КОМПОНЕНТ: CARDS-GRID (сетка карточек)
+// ============================================
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-xl);
+    width: 100%;
+    padding: var(--spacing-md);
+}
+
+// ============================================
+// КОМПОНЕНТ: CARD (карточка товара)
+// ============================================
+
+.card {
+    perspective: 1000px; // Для 3D эффекта переворота
+    cursor: pointer;
+    position: relative;
+    
+    // Модификатор: перевёрнутое состояние
+    &--flipped {
+        .card__inner {
+            transform: rotateY(180deg);
+        }
+    }
+    
+    // Модификатор: выбранная карточка
+    &--selected {
+        .card__inner {
+            box-shadow: 0 8px 24px rgba($light-selected, 0.4);
+            border-color: var(--selected);
+        }
+        
+        .card__front {
+            background: linear-gradient(135deg, 
+                var(--bg-card) 0%, 
+                rgba($light-selected, 0.1) 100%);
+        }
+    }
+    
+    // Модификатор: недоступная карточка (не хватает кармы)
+    &--unavailable {
+        opacity: 0.5;
+        cursor: not-allowed;
+        
+        .card__inner {
+            filter: grayscale(0.7);
+        }
+        
+        &:hover {
+            .card__inner {
+                transform: none;
+            }
+        }
+    }
+    
+    // Модификатор: анимация тряски (ошибка)
+    &--shake {
+        animation: shake 0.5s ease-in-out;
+    }
+    
+    &__inner {
+        position: relative;
+        width: 100%;
+        height: 380px;
+        transition: transform var(--transition-flip),
+                    box-shadow var(--transition-normal),
+                    border-color var(--transition-normal);
+        transform-style: preserve-3d;
+        border-radius: var(--radius-lg);
+        border: 2px solid var(--border);
+        box-shadow: 0 4px 12px var(--shadow);
+        
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+    }
+    
+    // Общие стили для передней и задней сторон
+    &__front,
+    &__back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden; // Скрываем обратную сторону при перевороте
+        border-radius: var(--radius-lg);
+        padding: var(--spacing-lg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-card);
+    }
+    
+    // Лицевая сторона карточки
+    &__front {
+        text-align: center;
+        transition: background var(--transition-normal);
+    }
+    
+    // Обратная сторона карточки
+    &__back {
+        transform: rotateY(180deg); // Изначально повёрнута
+        background: linear-gradient(135deg, 
+            var(--bg-secondary) 0%, 
+            var(--bg-card) 100%);
+        text-align: left;
+        justify-content: flex-start;
+        padding-top: var(--spacing-xl);
+    }
+    
+    &__image {
+        font-size: 5rem;
+        margin-bottom: var(--spacing-md);
+        filter: drop-shadow(0 4px 8px var(--shadow));
+        transition: transform var(--transition-normal);
+        
+        .card:hover & {
+            transform: scale(1.1) rotate(5deg);
+        }
+    }
+    
+    &__philosopher {
+        font-size: 1.5rem;
+        font-weight: normal;
+        color: var(--text-primary);
+        margin-bottom: var(--spacing-xs);
+        letter-spacing: 0.02em;
+    }
+    
+    &__era {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        font-style: italic;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    &__price {
+        font-size: 1.2rem;
+        color: var(--accent);
+        font-weight: 600;
+        padding: var(--spacing-sm) var(--spacing-md);
+        background: var(--bg-secondary);
+        border-radius: var(--radius-full);
+        margin-top: var(--spacing-md);
+    }
+    
+    &__status {
+        position: absolute;
+        top: var(--spacing-md);
+        right: var(--spacing-md);
+        padding: var(--spacing-xs) var(--spacing-md);
+        background: var(--selected);
+        color: white;
+        font-size: 0.8rem;
+        border-radius: var(--radius-full);
+        font-weight: 600;
+        box-shadow: 0 2px 8px var(--shadow);
+    }
+    
+    &__theory-title {
+        font-size: 1.1rem;
+        color: var(--accent);
+        margin-bottom: var(--spacing-md);
+        font-weight: 600;
+    }
+    
+    &__theory {
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        line-height: 1.7;
+        text-align: justify;
+        flex: 1;
+        overflow-y: auto;
+        padding-right: var(--spacing-sm);
+        
+        // Кастомный скроллбар
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        &::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: var(--radius-sm);
+        }
+    }
+    
+    &__select-btn {
+        width: 100%;
+        padding: var(--spacing-sm) var(--spacing-md);
+        margin-top: var(--spacing-md);
+        font-family: $font-family;
+        font-size: 1rem;
+        color: white;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+        border: none;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        box-shadow: 0 2px 8px var(--shadow);
+        
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        
+        // Модификатор: активная кнопка (товар выбран)
+        &--active {
+            background: linear-gradient(135deg, #5a8f5a 0%, #4a7a4a 100%);
+            
+            &:hover {
+                background: linear-gradient(135deg, #6aa36a 0%, #5a8f5a 100%);
+            }
+        }
+    }
+}
+
+// ============================================
+// КОМПОНЕНТ: EMPTY-MESSAGE (сообщение о пустоте)
+// ============================================
+
+.empty-message {
+    text-align: center;
+    padding: var(--spacing-xxl);
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 1.2rem;
+    
+    p {
+        opacity: 0.7;
+    }
+}
+
+// ============================================
+// КОМПОНЕНТ: FOOTER
+// ============================================
+
+.footer {
+    text-align: center;
+    padding: var(--spacing-xl);
+    margin-top: var(--spacing-xxl);
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    
+    p {
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    &__note {
+        font-style: italic;
+        opacity: 0.8;
+        font-size: 0.85rem;
+    }
+}
+
+// ============================================
+// АНИМАЦИИ
+// ============================================
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-8px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(8px);
+    }
+}
+
+// ============================================
+// МЕДИА-ЗАПРОСЫ (АДАПТИВНОСТЬ)
+// ============================================
+
+// Планшеты и небольшие экраны
+@media (max-width: 768px) {
+    .app {
+        padding: var(--spacing-lg);
+    }
+    
+    .header {
+        padding: var(--spacing-lg);
+        
+        &::before {
+            font-size: 2rem;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
+        }
+    }
+    
+    .karma-setup {
+        width: 100%;
+    }
+    
+    .karma-display {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .cards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: var(--spacing-lg);
+    }
+    
+    .card {
+        &__inner {
+            height: 340px;
+        }
+        
+        &__image {
+            font-size: 4rem;
+        }
+        
+        &__philosopher {
+            font-size: 1.3rem;
+        }
+        
+        &__theory {
+            font-size: 0.9rem;
+        }
+    }
+}
+
+// Мобильные телефоны
+@media (max-width: 480px) {
+    .app {
+        padding: var(--spacing-md);
+    }
+    
+    .header {
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-xl);
+    }
+    
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+        padding: 0;
+    }
+    
+    .card {
+        &__inner {
+            height: 400px; // Больше места для текста на мобильном
+        }
+        
+        &__image {
+            font-size: 3.5rem;
+        }
+        
+        &__theory {
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        
+        &__select-btn {
+            font-size: 0.9rem;
+            padding: var(--spacing-sm);
+        }
+    }
+    
+    .karma-setup__input {
+        width: 80px;
+    }
+    
+    .footer {
+        padding: var(--spacing-lg);
+        margin-top: var(--spacing-xl);
+    }
+}
+
+// ============================================
+// ПРЕФЕРЕНЦИИ ПО ТЁМНОЙ ТЕМЕ
+// ============================================
+// Автоматическое переключение при системной настройке
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg-primary: #{$dark-bg-primary};
+        --bg-secondary: #{$dark-bg-secondary};
+        --bg-card: #{$dark-bg-card};
+        --text-primary: #{$dark-text-primary};
+        --text-secondary: #{$dark-text-secondary};
+        --accent: #{$dark-accent};
+        --accent-hover: #{$dark-accent-hover};
+        --selected: #{$dark-selected};
+        --shadow: #{$dark-shadow};
+        --border: #{$dark-border};
+    }
+}
+
+// ============================================
+// ДОПОЛНИТЕЛЬНЫЕ ЭФФЕКТЫ
+// ============================================
+
+// Эффект "состаренной бумаги" для карточек
+.card__front {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+// Плавное появление элементов при загрузке
+.app > * {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.header {
+    animation-delay: 0.1s;
+}
+
+.cards-grid {
+    animation-delay: 0.3s;
+}
+
+.footer {
+    animation-delay: 0.5s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// ============================================
+// КОНЕЦ СТИЛЕЙ
+// ============================================
+// Надеюсь, эти стили создадут нужную атмосферу мудрости и спокойствия
+// Помните: хороший дизайн — это не только красота, но и удобство использования
