@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Философский Магазин Идей</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 
+        Основной контейнер приложения
+        Здесь мы создаём атмосферу "магазина идей" - места, где можно приобрести мудрость веков
+        Обратите внимание на семантику: используем header для шапки, main для основного контента
+    -->
+    <div class="app">
+        <header class="header">
+            <h1 class="header__title">🏛️ Философский Магазин</h1>
+            <p class="header__subtitle">Приобретите идеи, которые изменят ваше сознание</p>
+            
+            <!-- 
+                Блок регистрации/настройки кармы
+                Карма определяет, сколько идей вы можете "понять" одновременно
+                Это метафора когнитивной нагрузки человека
+            -->
+            <div class="karma-setup" id="karmaSetup">
+                <label class="karma-setup__label" for="karmaInput">
+                    Ваша текущая карма (уровень мудрости):
+                </label>
+                <input 
+                    type="number" 
+                    id="karmaInput" 
+                    class="karma-setup__input" 
+                    min="1" 
+                    max="10" 
+                    value="3"
+                    aria-label="Введите уровень кармы от 1 до 10"
+                >
+                <button class="karma-setup__button" id="setKarmaBtn">
+                    Войти в магазин
+                </button>
+            </div>
+
+            <!-- 
+                Индикатор кармы и доступных слотов
+                Показывается только после установки уровня кармы
+            -->
+            <div class="karma-display hidden" id="karmaDisplay">
+                <span class="karma-display__value">Карма: <strong id="karmaValue">3</strong></span>
+                <span class="karma-display__slots">Доступно идей: <strong id="availableSlots">3</strong>/<span id="totalSlots">3</span></span>
+                <button class="karma-display__reset" id="resetKarmaBtn" aria-label="Сбросить карму">↻</button>
+            </div>
+        </header>
+
+        <main class="main">
+            <!-- 
+                Сетка карточек с идеями
+                Каждая карточка представляет философа и его ключевую идею
+                Используем БЭМ для строгой структуры именования классов
+            -->
+            <div class="cards-grid" id="cardsGrid">
+                <!-- Карточки будут добавлены через JavaScript -->
+            </div>
+
+            <!-- 
+                Сообщение о пустой корзине/отсутствии выбранных идей
+                Появляется динамически при необходимости
+            -->
+            <div class="empty-message hidden" id="emptyMessage">
+                <p>Выберите идеи, чтобы обогатить свой разум...</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>© 2024 Философский Магазин. Все идеи принадлежат их авторам.</p>
+            <p class="footer__note">Помните: покупая идею, вы принимаете ответственность за её использование</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
